@@ -1,3 +1,3 @@
-from django.shortcuts import render
+from captcha.models import CaptchaStore
 
-# Create your views here.
+from comment.models import CommentModel
