@@ -24,6 +24,7 @@ class RecordSerializer(serializers.ModelSerializer):
             "user_info",
             "text",
             "created_at",
+            "image"
         )
 
 
@@ -38,5 +39,6 @@ class CommentSerializer(serializers.ModelSerializer):
             "user_info",
             "created_at",
             "text",
-            "single_record"
+            "single_record",
+            "image"
         )
