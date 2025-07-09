@@ -6,39 +6,42 @@ from comment.models import CommentModel
 User = get_user_model()
 
 
-class UserInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            "username"
-        )
-
-
 class RecordSerializer(serializers.ModelSerializer):
-    user_info = UserInfoSerializer(read_only=True)
+    user = serializers.SlugRelatedField(
+        many=False,
+        slug_field="username",
+        read_only=True
+    )
 
     class Meta:
         model = CommentModel
         fields = (
             "id",
-            "user_info",
+            "user",
             "text",
             "created_at",
-            "image"
+            "images"
         )
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    single_record = RecordSerializer(many=True, read_only=True)
-    user_info = UserInfoSerializer(read_only=True)
+    child = RecordSerializer(
+        many=True,
+        read_only=True
+    )
+    user = serializers.SlugRelatedField(
+        many=False,
+        slug_field="username",
+        read_only=True
+    )
 
     class Meta:
         model = CommentModel
         fields = (
             "id",
-            "user_info",
+            "user",
             "created_at",
             "text",
-            "single_record",
-            "image"
+            "images",
+            "child"
         )

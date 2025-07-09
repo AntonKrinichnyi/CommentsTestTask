@@ -18,10 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from comment.views import CommentViewSet
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("/", CommentViewSet.as_view(), name="comment"),
+    path("comment/", include("comment.urls", namespace="comment")),
     path("user/", include("user.urls", namespace="user"))
 ]

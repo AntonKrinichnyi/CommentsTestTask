@@ -1,4 +1,8 @@
 from captcha.models import CaptchaStore
+from django.urls import reverse
+from rest_framework.response import Response
+from rest_framework.request import Request
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.mixins import (
@@ -18,6 +22,20 @@ class CommentsPagination(PageNumberPagination):
 
 class CommentViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
     queryset = (
-        CommentModel.objects.select_related("user", "record").all()
+        CommentModel.objects.all().select_related("user", "record")
     )
     serializer_class = CommentSerializer
+
+
+class CaptchaView(APIView):
+    def get(self, request: Request):
+        key = CaptchaStore.generate_key()
+        image_url = request.build_absolute_uri(
+            reverse("captcha-image", kwargs={"key": key})
+        )
+        return Response(
+            {
+                "key": key,
+                "image_url": image_url,
+            }
+        )
