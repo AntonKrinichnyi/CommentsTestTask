@@ -24,4 +24,4 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("comment/", include("comment.urls", namespace="comment")),
     path("user/", include("user.urls", namespace="user"))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

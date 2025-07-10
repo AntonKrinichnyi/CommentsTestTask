@@ -30,7 +30,7 @@ class CommentViewSet(CreateModelMixin, ListModelMixin, UpdateModelMixin, Generic
     template_name = "base.html"
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.queryset
         context = {
             "comments": queryset,
         }
